@@ -48,4 +48,13 @@ RSpec.configure do |config|
   end
 
   config.include BotHelper
+
+  module ShellHelper
+    def mockshell(x = 0, y = 0, name = 'testbot')
+      double('shell', :position => RTanque::Point.new(x, y, @arena), :bot => double('bot', :name => name), :arena => @arena)
+    end
+  end
+
+  config.include ShellHelper
+
 end

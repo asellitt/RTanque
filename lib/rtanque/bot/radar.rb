@@ -12,7 +12,7 @@ module RTanque
       # @attr_reader [RTanque::Heading] heading
       # @attr_reader [Float] distance
       # @attr_reader [String] name
-      Reflection = Struct.new(:heading, :distance, :name) do
+      Reflection = Struct.new(:heading, :distance, :name, :type, :speed) do
         def self.new_from_points(from_position, to_position, &tap)
           self.new(from_position.heading(to_position), from_position.distance(to_position)).tap(&tap)
         end
@@ -36,18 +36,30 @@ module RTanque
         self.count == 0
       end
 
-      def scan(bots)
+      def scan(bots, shells = [])
         @reflections.clear
         bots.each do |other_bot|
           if self.can_detect?(other_bot)
-            @reflections << Reflection.new_from_points(self.position, other_bot.position) { |reflection| reflection.name = other_bot.name }
+            @reflections << Reflection.new_from_points(self.position, other_bot.position) do |reflection|
+             reflection.name = other_bot.name
+             reflection.type = :bot
+            end
+          end
+        end
+        shells.each do |shell|
+          if self.can_detect?(shell)
+            @reflections << Reflection.new_from_points(self.position, shell.position) do |reflection|
+             reflection.name = shell.bot.name
+             reflection.type = :shell
+             reflection.speed = shell.speed
+            end
           end
         end
         self
       end
 
-      def can_detect?(other_bot)
-        VISION_RANGE.include?(Heading.delta_between_points(self.position, self.heading, other_bot.position))
+      def can_detect?(other_object)
+        VISION_RANGE.include?(Heading.delta_between_points(self.position, self.heading, other_object.position))
       end
     end
   end

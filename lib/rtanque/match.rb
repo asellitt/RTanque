@@ -38,7 +38,7 @@ module RTanque
     end
 
     def pre_bot_tick(bot)
-      bot.radar.scan(self.bots.all_but(bot))
+      bot.radar.scan(self.bots.all_but(bot), self.shells)
     end
 
     def post_bot_tick(bot)
