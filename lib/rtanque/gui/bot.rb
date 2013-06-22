@@ -11,10 +11,20 @@ module RTanque
       HEALTH_BAR_HEIGHT = 3
       HEALTH_BAR_WIDTH = 100
 
+      BODY_IMAGES = {
+        :default => "images/default_body.png",
+        :red => "images/red_body.png",
+        :green => "images/green_body.png", 
+        :blue => "images/blue_body.png",
+        :yellow => "images/yellow_body.png",
+        :purple => "images/purple_body.png",
+      }
+
       def initialize(window, bot)
         @window = window
         @bot = bot
-        @body_image = Gosu::Image.new(@window, Gui.resource_path("images/body.png"))
+        #@body_image = Gosu::Image.new(@window, Gui.resource_path("images/default_body.png")) 
+        @body_image = Gosu::Image.new(@window, Gui.resource_path(BODY_IMAGES[bot.color]))
         @turret_image = Gosu::Image.new(@window, Gui.resource_path("images/turret.png"))
         @radar_image = Gosu::Image.new(@window, Gui.resource_path("images/radar.png"))
         @score_bar_image = TexPlay.create_blank_image(@window, HEALTH_BAR_WIDTH, HEALTH_BAR_HEIGHT)

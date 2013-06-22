@@ -40,6 +40,10 @@ module RTanque
       @name ||= self.brain.class.const_defined?(:NAME) ? self.brain.class.const_get(:NAME) : [self.brain.class.name, self.object_id].join(':')
     end
 
+    def color
+      @color ||= self.brain.class.const_defined?(:COLOR) ? self.brain.class.const_get(:COLOR) : :default
+    end
+
     def health=(val)
       @health = val
     end
