@@ -12,7 +12,7 @@ module RTanque
       # @attr_reader [RTanque::Heading] heading
       # @attr_reader [Float] distance
       # @attr_reader [String] name
-      Reflection = Struct.new(:heading, :distance, :name, :type, :speed) do
+      Reflection = Struct.new(:heading, :distance, :name, :type, :speed, :id) do
         def self.new_from_points(from_position, to_position, &tap)
           self.new(from_position.heading(to_position), from_position.distance(to_position)).tap(&tap)
         end
@@ -52,6 +52,7 @@ module RTanque
              reflection.name = shell.bot.name
              reflection.type = :shell
              reflection.speed = shell.speed
+             reflection.id = shell.identifier
             end
           end
         end
