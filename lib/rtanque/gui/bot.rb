@@ -20,7 +20,17 @@ module RTanque
         :purple => "images/purple_body.png",
       }
 
+      NAME_COLORS = {
+        :default => 0xFFFFFFFF,
+        :red => 0xFFFF0000,
+        :green => 0xFF00FF00, 
+        :blue => 0xFF0000FF,
+        :yellow => 0xFFFFFF00,
+        :purple => 0xFFFF00FF,
+      }
+
       def initialize(window, bot)
+        #pry binding
         @window = window
         @bot = bot
         #@body_image = Gosu::Image.new(@window, Gui.resource_path("images/default_body.png")) 
@@ -53,7 +63,7 @@ module RTanque
 
       def draw_name(position)
         x,y = *position
-        @name_font.draw_rel(self.bot.name, x, y + (RTanque::Bot::RADIUS * @y_factor) + Window::SMALL_FONT_SIZE.to_i, ZOrder::BOT_NAME, 0.5, 0.5, @x_factor, @y_factor)
+        @name_font.draw_rel(self.bot.name, x, y + (RTanque::Bot::RADIUS * @y_factor) + Window::SMALL_FONT_SIZE.to_i, ZOrder::BOT_NAME, 0.5, 0.5, @x_factor, @y_factor, NAME_COLORS[@bot.color || :default])
       end
 
       def draw_health(position)

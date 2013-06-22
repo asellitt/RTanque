@@ -3,6 +3,7 @@
 # Enjoys sitting in the corners and firing powerful shots
 class Camper < RTanque::Bot::Brain
   NAME = 'Camper'
+  COLOR= :yellow
   include RTanque::Bot::BrainHelper
 
   CORNERS = [:NW, :NE, :SE, :SW]

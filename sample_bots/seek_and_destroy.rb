@@ -3,6 +3,7 @@
 # Enjoys following and target and firing many shots
 class SeekAndDestroy < RTanque::Bot::Brain
   NAME = 'Seek&Destroy'
+  COLOR = :red
   include RTanque::Bot::BrainHelper
 
   TURRET_FIRE_RANGE = RTanque::Heading::ONE_DEGREE * 5.0
