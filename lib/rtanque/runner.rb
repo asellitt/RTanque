@@ -14,6 +14,14 @@ module RTanque
     # @param [*match_args] args provided to {RTanque::Match#initialize}
     def initialize(width, height, *match_args)
       @match = RTanque::Match.new(RTanque::Arena.new(width, height), *match_args)
+      @corner = 0
+
+      @corners = [
+        [0, match.arena.height], #NW
+        [match.arena.width, match.arena.height], #NE
+        [match.arena.width, 0], #SE
+        [0, 0], #SW
+      ]
     end
 
     # Attempts to load given {RTanque::Bot::Brain} given its path
@@ -23,6 +31,7 @@ module RTanque
       parsed_path = self.parse_brain_path(brain_path)
       bots = parsed_path.multiplier.times.map { self.new_bots_from_brain_path(parsed_path.path) }.flatten
       self.match.add_bots(bots)
+      @corner += 1
     end
 
     # Starts the match
@@ -44,6 +53,7 @@ module RTanque
     def new_bots_from_brain_path(brain_path)
       self.fetch_brain_klasses(brain_path).map do |brain_klass|
         RTanque::Bot.new_random_location(self.match.arena, brain_klass)
+        #RTanque::Bot.new_from_team_location(self.match.arena, brain_klass, @corners[(@corner) % 4])
       end
     end
 

@@ -23,6 +23,16 @@ module RTanque
       end
     end
 
+    def self.new_from_team_location(*args)
+      self.new(args[0], args[1]).tap do |bot|
+        rand_heading = Heading.rand
+        bot.position = Point.new(args[2][0], args[2][1], bot.arena)
+        bot.heading = rand_heading
+        bot.radar.heading = rand_heading
+        bot.turret.heading = rand_heading
+      end
+    end
+
     def initialize(arena, brain_klass = Brain)
       @arena = arena
       @brain = brain_klass.new(self.arena)

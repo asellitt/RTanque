@@ -11,7 +11,7 @@ class SeekAndDestroy < RTanque::Bot::Brain
   def tick!
     @desired_heading ||= nil
 
-    if (lock = self.get_radar_lock)
+    if (lock = self.get_better_radar_lock)
       self.destroy_lock(lock)
       @desired_heading = nil
     else
@@ -39,6 +39,10 @@ class SeekAndDestroy < RTanque::Bot::Brain
       command.heading = @desired_heading
       command.turret_heading = @desired_heading
     end
+  end
+
+  def get_better_radar_lock
+    sensors.radar.find { |reflection| reflection.type == :bot && reflection.name != NAME }
   end
 
   def get_radar_lock
